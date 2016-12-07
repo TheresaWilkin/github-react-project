@@ -8,8 +8,8 @@ class App extends React.Component {
 		super();
 		this.state = {
 			text: 'searchphrase',
-			user: {username: 'repo'},
-			repos: ["array"]
+			user: {username: ''},
+			repos: []
 		};
 		this.update = this.update.bind(this);
 		this.change = this.change.bind(this);
@@ -17,28 +17,28 @@ class App extends React.Component {
 
 	update (e) {
 		e.preventDefault();
-		let search= this.state.text;
+		let search = this.state.text;
 		fetch(`https://api.github.com/users/${search}`)
 		.then((response) => {
-			if (!response.ok){
+			if (!response.ok) {
 				return Promise.reject(response.statusText);
 			}
 			return response.json();
 		})
 		.then((body) => {
-			this.setState({user: {username: body.login}})
+			this.setState({user: {username: body.login}});
 			// console.log(body);
 			// console.log(this.state.results[0].username);
 			return fetch(`https://api.github.com/users/${search}/repos`)
 		})
 		.then((response) => {
-			if (!response.ok){
+			if (!response.ok) {
 				return Promise.reject(response.statusText);
 			}
 			return response.json();
 		})
 		.then((body) => {
-			this.setState({repos: body})
+			this.setState({repos: body});
 			console.log(body);
 			// console.log(this.state.results[0].username);
 		})
