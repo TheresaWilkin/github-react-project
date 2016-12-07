@@ -6,7 +6,7 @@ const Input = (props) => {
 		<form onSubmit={props.update}>
 			<input type="text" onChange={props.change} />
 		</form>
-	)
-}
+	);
+};
 
 export default Input;

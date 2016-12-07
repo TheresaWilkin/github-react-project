@@ -1,37 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Input from './Input';
+import Results from './Results';
 
 class App extends React.Component {
-	constructor() {
+	constructor () {
 		super();
 		this.state = {
-			text: "searchphrase",
-			results: ["repo", "other stuff"]
-		}
-		this.update = this.update.bind(this)
-		this.change = this.change.bind(this)
+			text: 'searchphrase',
+			results: ['repo', 'other stuff']
+		};
+		this.update = this.update.bind(this);
+		this.change = this.change.bind(this);
 	}
 
-	update(e){
+	update (e) {
 		e.preventDefault();
-		console.log("search");
-		//use captured text to search, setState results to results, 
-		//which will render Results
+		console.log('search');
+		// use captured text to search, setState results to results,
+		// which will render Results
 	}
 
-	change(e){
+	change (e) {
 		this.setState({text: e.target.value});
 		console.log(this.state.text);
 	}
 
-	render(){
+	render () {
 		return (
 			<div>
 				<Input update={this.update} change={this.change} />
+				<Results results={this.state.results} />
 			</div>
-		)
+		);
 	}
 }
 
-export default App
+export default App;
