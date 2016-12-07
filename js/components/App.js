@@ -8,7 +8,8 @@ class App extends React.Component {
 		super();
 		this.state = {
 			text: 'searchphrase',
-			results: ['repo', 'other stuff']
+			user: {username: 'repo'},
+			repos: ["array"]
 		};
 		this.update = this.update.bind(this);
 		this.change = this.change.bind(this);
@@ -16,23 +17,47 @@ class App extends React.Component {
 
 	update (e) {
 		e.preventDefault();
-		console.log('search');
-		// use captured text to search, setState results to results,
-		// which will render Results
+		let search= this.state.text;
+		fetch(`https://api.github.com/users/${search}`)
+		.then((response) => {
+			if (!response.ok){
+				return Promise.reject(response.statusText);
+			}
+			return response.json();
+		})
+		.then((body) => {
+			this.setState({user: {username: body.login}})
+			// console.log(body);
+			// console.log(this.state.results[0].username);
+			return fetch(`https://api.github.com/users/${search}/repos`)
+		})
+		.then((response) => {
+			if (!response.ok){
+				return Promise.reject(response.statusText);
+			}
+			return response.json();
+		})
+		.then((body) => {
+			this.setState({repos: body})
+			console.log(body);
+			// console.log(this.state.results[0].username);
+		})
+		.catch(err => {
+			console.error(err);
+		});
 	}
 
 	change (e) {
 		this.setState({text: e.target.value});
-		console.log(this.state.text);
 	}
 
 	render () {
 		return (
 			<div>
-				<Input update={this.update} change={this.change} />
-				<Results results={this.state.results} />
+			<Input update={this.update} change={this.change} />
+			<Results user={this.state.user} repos={this.state.repos} />
 			</div>
-		);
+			);
 	}
 }
 
