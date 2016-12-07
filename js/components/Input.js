@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// Change to refs implementation
 const Input = (props) => {
 	return (
 		<form onSubmit={props.update}>
