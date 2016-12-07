@@ -48,13 +48,13 @@ class App extends React.Component {
 	}
 
 	change (e) {
-		this.setState({text: e.target.value});
+		this.setState({text: this.text.refs.input.value});
 	}
 
 	render () {
 		return (
 			<div>
-			<Input update={this.update} change={this.change} />
+			<Input ref={component => this.text = component} update={this.update} change={this.change.bind(this)} />
 			<Results user={this.state.user} repos={this.state.repos} />
 			</div>
 			);
