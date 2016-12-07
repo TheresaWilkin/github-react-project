@@ -9,4 +9,4 @@ const Input = (props) => {
 	)
 }
 
-export default Input
+export default Input;
